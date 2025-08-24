@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen</title>
+</head>
+<style>
+    body{
+        background-color: rgb(33, 33, 33);
+    }
+    .box{
+        color: white;
+        background-color: rgb(80, 80, 80);
+        height: 450px;
+        margin-top: 40px;
+        border-radius: 15px;
+        display: flex;
+        font-size: 40px;
+        flex-direction: column;
+        align-items: center;
+        width: 600px;
+    }
+    .center{
+        display: flex;
+        justify-content: center;
+    }
+    .loginbtn{
+        appearance: button;
+        background-color: #1e18d6;
+        border: solid transparent;
+        border-radius: 16px;
+        border-width: 0 0 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: din-round,sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: .8px;
+        line-height: 70px;
+        margin: 0;
+        outline: none;
+        overflow: visible;
+        padding: 13px 16px;
+        text-align: center;
+        text-transform: uppercase;
+        touch-action: manipulation;
+        transform: translateZ(0);
+        transition: filter .2s;
+        user-select: none;
+        -webkit-user-select: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 200px;
+    }
+
+    .loginbtn:after {
+        background-clip: padding-box;
+        background-color: #2b1cf6;
+        border: solid transparent;
+        border-radius: 20px;
+        border-width: 0 0 4px;
+        bottom: -1px;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+    }
+
+    .loginbtn,
+    .loginbtn:focus {
+        user-select: auto;
+    }
+
+    .loginbtn:hover:not(:disabled) {
+        filter: brightness(1.1);
+        -webkit-filter: brightness(1.1);
+    }
+
+    .loginbtn:disabled {
+        cursor: auto;
+    }
+
+    .loginbtn:active {
+        border-width: 4px 0 0;
+        background: none;
+    }
+    .login{
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+    }
+
+</style>
+<body>
+    <div class="center">
+        <div class="box">
+            <p>So geht's</p>
+            <p>
+                1. 0,50€ bezahlen<br>
+                2. Login erhalten <br>
+                3. Spiele Tippen <br>
+                4. geld gewinnen <br>
+            </p>
+        </div>
+    </div>
+    <div class="login">
+        <button class="loginbtn" onclick="gologin()">Login</button>
+
+    </div>
+</body>
+<script>
+function gologin(){
+    window.location.href = "/login/"
+}
+</script>
+</html>

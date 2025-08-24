@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting</title>
+</head>
+
+<style>
+    body{
+        margin: 0;
+        background-color: rgb(33, 33, 33);
+    }
+    header{
+        height: 100px;
+        box-shadow: 0 5px 13px 2px #4d4d4d;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .über{
+        font-size: 50px;
+        color: white;
+    }
+    .name{
+        color: white;
+        font-size: 21px;
+    }
+    .conname{
+        display: flex;
+        justify-content: center;
+    }
+    .logoutbtn{
+        font-size: 20px;
+        border-radius: 10px;
+        position: fixed;
+        right: 10px;
+        top: 10px;
+        background-color: red;
+        border-color: red;
+    }
+    .zahlin{
+        width: 40px;
+        font-size: large;
+    }
+    .club{
+        font-size: 30px;
+        color: white;
+        margin-left: 15%;
+        margin-top: 60px;
+    }
+    .button-5 {
+        align-items: center;
+        background-clip: padding-box;
+        background-color: #fa6400;
+        border: 1px solid transparent;
+        border-radius: .55rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 26px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin-top: 150px;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+    .button-5:hover,
+    .button-5:focus {
+        background-color: #fb8332;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    }
+
+    .button-5:hover {
+        transform: translateY(-1px);
+    }
+
+    .button-5:active {
+        background-color: #c85000;
+        box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+        transform: translateY(0);
+    }
+    .forcent{
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<body>  
+    <header>
+        <h1 class="über">Wilkommen</h1> <a href="/logout/"><button class="logoutbtn">Logout</button></a>
+    </header> 
+    <div class="conname"> 
+        <p class="name">{{user.username}}</p>
+    </div>
+    <div>
+        <p id="PTA" class="club">
+            <span id="teamA"></span>
+            <input class="zahlin" id="TA" type="number">
+        </p>
+
+        <p class="club">VS.</p>
+
+        <p id="PTB" class="club">
+            <span id="teamB"></span>
+            <input class="zahlin" id="TB" type="number">
+        </p>
+
+        <div class="forcent">
+            <button class="button-5" onclick="nextstart()" id="ferbtn">Weiter</button>
+        </div>
+    </div>
+</body>
+<script>
+    const teams = {
+        1: {A: "{{ Team1A }}", B: "{{ Team1B }}"},
+        2: {A: "{{ Team2A }}", B: "{{ Team2B }}"},
+        3: {A: "{{ Team3A }}", B: "{{ Team3B }}"},
+        4: {A: "{{ Team4A }}", B: "{{ Team4B }}"},
+        5: {A: "{{ Team5A }}", B: "{{ Team5B }}"},
+        6: {A: "{{ Team6A }}", B: "{{ Team6B }}"},
+        7: {A: "{{ Team7A }}", B: "{{ Team7B }}"},
+        8: {A: "{{ Team8A }}", B: "{{ Team8B }}"},
+        9: {A: "{{ Team9A }}", B: "{{ Team9B }}"}
+    };
+    let Nr = 1
+    document.getElementById("teamA").textContent = teams[Nr].A
+    document.getElementById("teamB").textContent = teams[Nr].B
+
+    function nextstart(){
+        let TeamA = document.getElementById("TA").value;
+        let TeamB = document.getElementById("TB").value;
+        token = "{{csrf_token}}";
+
+        let formuData = new FormData
+        formuData.append("csrfmiddlewaretoken", token)
+        formuData.append("TA", TeamA)
+        formuData.append("TB", TeamB)
+        formuData.append("Nr", Nr)
+
+        if(Nr==8){
+            document.getElementById("ferbtn").textContent = "Weiter/Fertig";
+            document.getElementById("ferbtn").style.backgroundColor="green";
+        }
+        if(Nr==9){
+            window.location.href = '/logout/';
+            formuData.append("aktiv", false)
+        }else{
+            Nr++;
+            formuData.append("aktiv", true)
+        }
+
+        document.getElementById("TA").value = "";
+        document.getElementById("TB").value = "";
+        document.getElementById("teamA").textContent = teams[Nr].A
+        document.getElementById("teamB").textContent = teams[Nr].B
+
+
+        fetch('/tipp/', {
+            method: 'POST',
+            body: formuData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Antwort von Django:", data);
+        })
+        
+    }
+
+</script>
+</html>
